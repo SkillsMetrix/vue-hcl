@@ -1,0 +1,29 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+
+    <div class="intro">
+      <h1>{{message2}}</h1>
+    </div>
+
+
+    <script>
+     // creating Vue instance
+        var mydata= new Vue({
+            el: '.intro',
+            data: {
+                message2 : 'Welcome to VueJS'
+            }
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <button v-on:click="increment(2,$event)">INC</button>
+        <p>{{counter}}</p>
+
+        <hr>
+        <p v-on:mousemove="updateCoordinates">coordinates: {{x}} / {{y}}
+            <span v-on:mousemove.stop="">Dead Spot</span>
+        </p>
+        <hr>
+        UserName: <input v-on:keyup="callAlert"/>
+        Email: <input type="text" v-model="email" >
+    </div>
+
+
+    <script>
+        // creating Vue instance
+        var mydata = new Vue({
+            el: '#app',
+            data: {
+                counter: 0,
+                x: 0,
+                y: 0,
+                email :'admin@mail.com'
+            },
+            methods: {
+                increment: function (step, event) {
+                    this.counter += step
+                },
+                updateCoordinates: function (event) {
+                    this.x = event.clientX
+                    this.y = event.clientY
+                },
+                callAlert:function(){
+                    alert('called')
+                }
+            },
+        })
+    </script>
+
+</body>
+
+</html>

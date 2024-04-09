@@ -36,7 +36,7 @@ var vm2 = new Vue({
     title: "The another Vue Instance",
   },
   methods: {
-    onChange: function () {
+    onChange() {
       vm1.title = "changed by vm2";
     },
   },

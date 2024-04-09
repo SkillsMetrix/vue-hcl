@@ -13,24 +13,53 @@ new Vue({
             this.monsterHealth=100
         },
         attack:function(){
-            var max=10
-            var min=3
-            var damage=Math.max(Math.floor(Math.random() * max) +1,min)
-            this.monsterHealth -=damage
-            if(this.monsterHealth <=0){
-                alert('You Won the Game')
-                this.gameIsRunning = false
-                return
+           this.monsterHealth -=this.calculateDamage(3,10)
+           if(this.checkWin()){
+            return
+           }
+           this.playerHealth -=this.calculateDamage(5,12)
+           this.checkWin() 
+           
+          
+        },
+        specialAttack:function(){
+            this.monsterHealth -=this.calculateDamage(10,20)
+            if(this.checkWin()){
+             return
             }
-            var max=12
-            var min=5
-            var damage=Math.max(Math.floor(Math.random() * max) +1,min)
-            this.playerHealth -=damage
-            if(this.playerHealth <=0){
-                alert('You Loose the Game')
-                this.gameIsRunning = false
-            }
+           this.monsterAttack()
+            
+        },
+        monsterAttack:function(){
+            this.playerHealth -=this.calculateDamage(5,12)
+            this.checkWin()
+        },
+        heal:function(){
 
+        },
+        giveUp:function(){
+
+        },
+        calculateDamage:function(min,max){
+            return Math.max(Math.floor(Math.random() * max) +1,min)
+        },
+        checkWin: function(){
+            if(this.monsterHealth <=0){
+                if(confirm('You won the game ! wana play again?')){
+                 this.startGame()
+                }else {
+                this.gameIsRunning = false
+                }
+                return true
+            } else if (this.playerHealth <=0) {
+                if(confirm('You Lost the game ! wana play again?')){
+                    this.startGame()
+                   }else {
+                   this.gameIsRunning = false
+                   }
+                   return true
+            }
+            return false
         }
     },
     

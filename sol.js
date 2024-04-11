@@ -9,7 +9,7 @@
     <hr />
     <div class="row">
       <div class="col-xs-12 col-sm-6">
-        <UserDetails :name="name"></UserDetails>
+        <UserDetails :name="name" @namewasreset="name=$event"></UserDetails>
       </div>
 
       <div class="col-xs-12 col-sm-6">
@@ -48,18 +48,32 @@ div {
 
 
 
---------------
+-----------
 
   <template>
     <div class="component">
    USer Details
-   <p>User Name: {{ name }}</p>
+   <p>User Name: {{ switchName() }}</p>
+   <button @click="resetName">Reset Name</button>
     </div>
 </template>
 
 <script>
 export default{
-    props:['name']
+    props:{
+       name:{
+        type:String
+       }
+    },
+    methods: {
+        switchName(){
+            return this.name.split('').reverse().join('')
+        },
+        resetName(){
+            this.name='Admin'
+            this.$emit('namewasreset',this.name)
+        }
+    },
 
 }
 </script>

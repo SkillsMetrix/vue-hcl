@@ -1,33 +1,71 @@
-{
-  "name": "my-app",
-  "description": "A Vue.js project",
-  "version": "1.0.0",
-  "author": "",
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+<template>
+  <div class="component">
+    <p>User App Component</p>
+
+    <h3>{{ name }}</h3>
+
+    <button @click="changeName">Change Name</button>
+
+    <hr />
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <UserDetails :name="name"></UserDetails>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <UserEdit></UserEdit>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import UserEdit from "./UserEdit.vue";
+import UserDetails from "./UserD.vue";
+export default {
+  data() {
+    return {
+      name:'Admin'
+    }
   },
-  "dependencies": {
-    "vue": "^2.5.11"
+  methods: {
+    changeName(){
+      this.name='Manager'
+    }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-3": "^6.24.1",
-    "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
-    "file-loader": "^1.1.4",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
-  }
+  components: {
+    UserEdit,
+    UserDetails,
+  },
+};
+</script>
+
+<style scoped>
+div {
+  background-color: lightblue;
 }
+</style>
+
+
+
+--------------
+
+  <template>
+    <div class="component">
+   USer Details
+   <p>User Name: {{ name }}</p>
+    </div>
+</template>
+
+<script>
+export default{
+    props:['name']
+
+}
+</script>
+
+<style scoped>
+div{
+    background-color: lightcoral;
+}
+</style>

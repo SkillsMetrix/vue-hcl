@@ -1,92 +1,33 @@
-<template>
-  <div>
-    <p>Server details are currently not updated</p>
-  </div>
-    </template>
-    
-    <script>
-     
-   
-    </script>
-
-
-----
-
-
-
-
-  <template>
-  <div>
-    <ul>
-      <li v-for="index in 5">Server # {{ index }}</li>
-    </ul>
-  </div>
-</template>
-<script>
-</script>
-
-
------------
-
-  <template>
-<h3>Server Status</h3>
-</template>
-
-<script>
- 
-  
-</script>
-
-----------
-
-  <template>
-    <h3>All Servers are managed here</h3>
-    </template>
-    
-    <script>
-     
-      
-    </script>
-
-
--------------
-
-  <template>
- <div>
-  <app-header></app-header>
-  <hr>
-  <div>
-    <servers></servers>
-    <app-server-details></app-server-details>
-  </div>
-  <hr>
-  <app-footer></app-footer>
- </div>
-</template>
-
-<script>
- import Header from './components/shared/Header.vue'
- import Footer from './components/shared/Footer.vue'
- import Servers from './components/server/Servers.vue'
- import ServerDetails from './components/server/ServerDetails.vue'
-
- export default {
-  components: {
-    appHeader: Header,
-    Servers,
-    'app-server-details':ServerDetails,
-    'app-footer':Footer
+{
+  "name": "my-app",
+  "description": "A Vue.js project",
+  "version": "1.0.0",
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "dependencies": {
+    "vue": "^2.5.11"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
   }
- }
-</script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
-</style>

@@ -1,132 +1,129 @@
 <template>
-  <div class="component">
-    <p>User App Component</p>
+    <div class="container">
+        <form>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <h1>File a Complaint</h1>
+                    <hr>
+                    <div class="form-group">
+                        <label for="email">Mail</label>
+                        <input
+                                type="text"
+                                id="email"
+                                class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+                                type="password"
+                                id="password"
+                                class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input
+                                type="number"
+                                id="age"
+                                class="form-control">
+                    </div>
 
-    <h3>{{ name }} and age is {{ age }}</h3> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
+                    <label for="message">Message</label><br>
+                    <!-- Interpolation between <textarea>{{ test }}</textarea> doesn't work!-->
+                    <textarea
+                            id="message"
+                            rows="5"
+                            class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <label for="sendmail">
+                            <input
+                                    type="checkbox"
+                                    id="sendmail"
+                                    value="SendMail"> Send Mail
+                        </label>
+                        <label for="sendInfomail">
+                            <input
+                                    type="checkbox"
+                                    id="sendInfomail"
+                                    value="SendInfoMail"> Send Infomail
+                        </label>
+                    </div>
 
-    <button @click="changeName">Change Name</button>
-
-    <hr />
-    <div class="row">
-      <div class="col-xs-12 col-sm-6">
-        <UserDetails :name="name" @namewasreset="name=$event" :userAge="age"></UserDetails>
-      </div>
-
-      <div class="col-xs-12 col-sm-6">
-        <UserEdit :userAge="age" @agewaschanged="age=$event"></UserEdit>
-      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
+                    <label for="male">
+                        <input
+                                type="radio"
+                                id="male"
+                                value="Male"> Male
+                    </label>
+                    <label for="female">
+                        <input
+                                type="radio"
+                                id="female"
+                                value="Female"> Female
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 from-group">
+                    <label for="priority">Priority</label>
+                    <select
+                            id="priority"
+                            class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <button
+                            class="btn btn-primary">Submit!
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Your Data</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Mail:</p>
+                        <p>Password:</p>
+                        <p>Age:</p>
+                        <p>Message: </p>
+                        <p><strong>Send Mail?</strong></p>
+                        <ul>
+                            <li></li>
+                        </ul>
+                        <p>Gender:</p>
+                        <p>Priority:</p>
+                        <p>Switched:</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import UserEdit from "./UserEdit.vue";
-import UserDetails from "./UserD.vue";
-export default {
-  data() {
-    return {
-      name:'Admin',
-      age:20
+    export default {
     }
-  },
-  methods: {
-    changeName(){
-      this.name='Manager'
-    }
-  },
-  components: {
-    UserEdit,
-    UserDetails,
-  },
-};
 </script>
 
-<style scoped>
-div {
-  background-color: lightblue;
-}
+<style>
+
 </style>
-
-
-
------------
-
-  <template>
-    <div class="component">
-        UserAge is : {{ userAge }}
-        <button @click="editAge">Change Age</button>
-    </div>
- 
-</template>
-
-
-<script>
-import { eventBus } from "../main";
-export default {
-props :['userAge'],
-
-methods:{
-    editAge(){
-        this.userAge=40
-       // this.$emit('agewaschanged',this.userAge)
-       eventBus.$emit('agewaschanged',this.userAge)
-
-    }
-}
-}
-</script>
-
-<style scoped>
-div{
-    background-color: lightgreen;
-}
-</style>
-
-
----------
-
-
-  <template>
-    <div class="component">
-   USer Details
-   <p>User Name: {{ switchName() }} and age is : {{ userAge }}</p>
-   <button @click="resetName">Reset Name</button>
-    </div>
-</template>
-
-<script>
-import { eventBus } from "../main";
-
-export default{
-    props:{
-       name:{
-        type:String
-       },
-       userAge: Number
-    },
-    methods: {
-        switchName(){
-            return this.name.split('').reverse().join('')
-        },
-        resetName(){
-            this.name='Admin'
-            this.$emit('namewasreset',this.name)
-        }
-    },
-    created() {
-        eventBus.$on('agewaschanged',(age)=>{
-            this.userAge=age
-        })
-    },
-
-}
-</script>
-
-<style scoped>
-div{
-    background-color: lightcoral;
-}
-</style>
-
-
-----

@@ -1,55 +1,83 @@
 <template>
-  <div>
-    <p>User Registration</p>
-    UserName:<input placeholder="Enter UserName" v-model="user.uname" />
-    <br />
-    Email:<input type="email" placeholder="Enter Email" v-model="user.email" />
-    <br />
-    <button @click="addUser">Add User</button>
+  <div id="app">
+    <p>Routing Application</p>
+     
 
-    <hr />
-    <div>
-      <p>User Details</p>
-      <ul>
-        <li v-for="u in udata">{{ u.uname }} --{{ u.email }}</li>
-      </ul>
-      <button @click="loadUsers">Load Users</button>
+    <hr>
+    <router-view name="header-top"></router-view>
+    <router-view></router-view>
+    <router-view name="header-bottom"></router-view>
     </div>
-  </div>
+    
 </template>
+
 <script>
+import Header from './Header.vue'
 export default {
-  data() {
+  components:{
+Header
+  },
+  name: 'app',
+  data () {
     return {
-      user: {
-        uname: "",
-        email: "",
-      },
-      udata: [],
-    };
-  },
-  methods: {
-    addUser() {
-      this.$http
-        .post("http://localhost:4000/adduser", this.user)
-        .then((response) => {
-          console.log(response);
-        });
-    },
-    loadUsers() {
-      this.$http
-        .get("http://localhost:4000/loadusers2")
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          const userArray = [];
-          for (let key in data) {
-            userArray.push(data[key]);
-          }
-          this.udata = userArray;
-        });
-    },
-  },
-};
+      msg: 'Welcome to Your Vue.js App'
+    }
+  }
+}
 </script>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+h1, h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+</style>
+
+
+---------
+
+
+  import User from './components/User.vue'
+import Home from './Home.vue'
+import UserDetails from './components/UserDetails.vue'
+import UserEdit from './components/UserEdit.vue'
+import UserStart from './components/UserStart.vue'
+import Header from './Header.vue'
+ 
+export const routes=[
+    {path:'',name:'home', components:{
+        default:Home,
+        'header-top':Header
+    }},
+
+    {path:'/user',components:{
+        default:User,
+        'header-bottom':Header
+    },children:[
+        {path:'',component:UserStart},
+        {path:':id',component:UserDetails},
+        {path:':id/edit',component:UserEdit,name:'userEdit'}
+    ]}
+]

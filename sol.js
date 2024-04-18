@@ -1,80 +1,49 @@
-<template>
-    <div>
-        <h3>Some User Details</h3>
-        <p>User loaded has ID: {{ $route.params.id }}</p>
-        <router-link
-                tag="button"
-                :to="link"
-                class="btn btn-primary">Edit User
-        </router-link>
-    </div>
-</template>
+import Home from './components/Home.vue';
+import Header from './components/Header.vue';
 
-<script>
-    export default {
-        data() {
-            return {
-                link: {
-                    name: 'userEdit',
-                    params: {
-                        id: this.$route.params.id
-                    },
-                    query: {
-                        locale: 'en',
-                        q: 100
-                    },
-                    hash: '#data'
-                }
-            }
-        },
-        beforeRouteEnter(to, from, next) {
-            if (true) {
-                next();
-            } else {
-                next(false);
-            }
-        }
+const User = resolve => {
+    require.ensure(['./components/User.vue'], () => {
+        resolve(require('./components/User.vue'));
+    }, 'user');
+};
+const UserStart = resolve => {
+    require.ensure(['./components/UserStart.vue'], () => {
+        resolve(require('./components/user/UserStart.vue'));
+    }, 'user');
+};
+const UserEdit = resolve => {
+    require.ensure(['./components/UserEdit.vue'], () => {
+        resolve(require('./components/UserEdit.vue'));
+    }, 'user');
+};
+const UserDetail = resolve => {
+    require.ensure(['./components/UserDetail.vue'], () => {
+        resolve(require('./components/UserDetail.vue'));
+    }, 'user');
+};
+
+export const routes = [
+    {
+        path: '', name: 'home', components: {
+        default: Home,
+        'header-top': Header
     }
-</script>
-
-
-
-
-
---------
-
-
-    <template>
-    <div>
-        <h3>Edit the User</h3>
-        <p>Locale: {{ $route.query.locale }}</p>
-        <p>Analytics: {{ $route.query.q }}</p>
-        <hr>
-        <button class="btn btn-primary" @click="confirmed = true">Confirm</button>
-        <div style="height: 700px"></div>
-        <p id="data">Some extra Data</p>
-    </div>
-</template>
-
-<script>
-    export default {
-        data() {
-          return {
-              confirmed: false
-          }
-        },
-        beforeRouteLeave(to, from, next) {
-            if (this.confirmed) {
-                next();
-            } else {
-                if (confirm('Are you sure?')) {
-                    next();
-                } else {
-                    next(false);
-                }
-            }
+    },
+    {
+        path: '/user', components: {
+        default: User,
+        'header-bottom': Header
+    }, children: [
+        {path: '', component: UserStart},
+        {
+            path: ':id', component: UserDetail, beforeEnter: (to, from, next) => {
+            console.log('inside route setup');
+            next();
         }
-    }
-</script>
-
-
+        },
+        {path: ':id/edit', component: UserEdit, name: 'userEdit'}
+    ]
+    },
+    {path: '/redirect-me', redirect: {name: 'home'}},
+    {path: '*', redirect: '/'}
+];

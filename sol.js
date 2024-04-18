@@ -1,42 +1,32 @@
 <template>
     <div>
-        UserDetails component 
-        <p>User Loaded with ID :{{ $route.params.id }}</p>
-        <hr>
-        <router-link tag="button" class="btn btn-warning" :to="link" > Edit User</router-link>
-
-    </div>
-   
-</template>
-
-<script>
-export default {
-    data(){
-        return {
-            link:{
-                name: 'userEdit',
-                params:{
-                    id:$route.params.id
-                },
-                query:{
-                    locale:'en',q:100
-                },
-                hash: '#data'
-            }
-        }
-    }
-}
-</script>
-
-------------------
-  <template>
-    <div>
         UserEdit component:
         <p>Locale :{{$route.query.locale}}</p>
         <p>Analytics :{{$route.query.q}}</p>
-
+<hr>
+<button class="btn btn-primary" @click="confirmed=true">Confirm</button>
         <div style="height: 700px;"></div>
         <p id="data">Some extra data</p>
     </div>
    
 </template>
+<script>
+export default {
+    data(){
+        return{
+            confirmed: false
+        }
+    },
+    beforeRouteLeave (to, from, next) {
+        if(this.confirmed){
+            next()
+        }else{
+            if(confirm('Are you sure?')){
+                next()
+            }else {
+                next(false)
+            }
+        }
+    }
+}
+</script>

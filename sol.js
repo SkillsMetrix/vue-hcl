@@ -1,49 +1,45 @@
-import Home from './components/Home.vue';
-import Header from './components/Header.vue';
+* {
+  box-sizing:border-box;
+  padding: 0;
+  margin: 0;
+}
 
-const User = resolve => {
-    require.ensure(['./components/User.vue'], () => {
-        resolve(require('./components/User.vue'));
-    }, 'user');
-};
-const UserStart = resolve => {
-    require.ensure(['./components/UserStart.vue'], () => {
-        resolve(require('./components/user/UserStart.vue'));
-    }, 'user');
-};
-const UserEdit = resolve => {
-    require.ensure(['./components/UserEdit.vue'], () => {
-        resolve(require('./components/UserEdit.vue'));
-    }, 'user');
-};
-const UserDetail = resolve => {
-    require.ensure(['./components/UserDetail.vue'], () => {
-        resolve(require('./components/UserDetail.vue'));
-    }, 'user');
-};
+body {
+  background: #f1f3f5;
+  font-family: segoe ui,helvetica neue,sans-serif;
+  color: #345;
+  overflow-x: hidden;
+}
 
-export const routes = [
-    {
-        path: '', name: 'home', components: {
-        default: Home,
-        'header-top': Header
-    }
-    },
-    {
-        path: '/user', components: {
-        default: User,
-        'header-bottom': Header
-    }, children: [
-        {path: '', component: UserStart},
-        {
-            path: ':id', component: UserDetail, beforeEnter: (to, from, next) => {
-            console.log('inside route setup');
-            next();
-        }
-        },
-        {path: ':id/edit', component: UserEdit, name: 'userEdit'}
-    ]
-    },
-    {path: '/redirect-me', redirect: {name: 'home'}},
-    {path: '*', redirect: '/'}
-];
+/* CSS Grid Styling
+*******************/
+.header {
+  grid-area: header;
+}
+.banner {
+  grid-area: banner;
+}
+.weather-search {
+  grid-area: search;
+}
+.weather-results {
+  grid-area: results;
+}
+.footer {
+  grid-area: footer;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 10% 35% 35% 10%;
+  grid-auto-rows: minmax(20px, auto);
+  grid-gap: 10px;
+  max-width: 1080px;
+  margin: auto;
+  grid-template-areas:
+    "header   header     header    header"
+    "banner   banner     banner    banner"
+    "...      search     search    ..."
+    "...      results    results   ..."
+    "footer   footer     footer    footer";
+}

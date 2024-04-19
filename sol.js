@@ -1,40 +1,9 @@
 <template>
-  <div>
-    Search:<input
-      type="text"
-      placeholder="Search city here"
-      v-model="inputCity"
-    />
-    <button @click="searchCity">Load</button>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      inputCity: "",
-    };
-  },
-  methods: {
-    searchCity() {
-      this.$emit("search-city", this.inputCity);
-    },
-  },
-};
-</script>
-
-
-
-----------
-
-
-  <template>
   <div id="app">
     Welcome
 
-    <Header v-bind:title="title"></Header>
-    <Banner></Banner>
+    <Header class="header" v-bind:title="title"></Header>
+    <Banner class="banner" v-bind:bannerMessage="messageToDisplay" v-bind:bannerType="messageType"></Banner>
     <Search v-on:search-city="searchCity"></Search>
     <Weather></Weather>
     <Footer :fm="footerMessage"></Footer>
@@ -63,14 +32,22 @@ export default {
     return {
       title:'Vue Weather App',
       footerMessage:'HCL Tech All rights Reserved @ 2024',
-      apiKey:'b3aaa0b3323c0baab93aff38f75b44cb'
+      apiKey:'b3aaa0b3323c0baab93aff38f75b44cb',
+      messageType:'Info',
+      messageToDisplay:''
     }
   },
+  created() {
+    if(this.apiKey ===''){
+     this.messageType='Error',
+     this.messageToDisplay='API Key not found...!'
+    }
+  },
+  
   methods: {
     searchCity(city){
       axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${this.apiKey}`)
-     //axios.get('https://jsonplaceholder.typicode.com/users')
-      .then((response)=> {
+       .then((response)=> {
         console.log(response.data);
        })
 
@@ -124,5 +101,54 @@ body {
     "...      search     search    ..."
     "...      results    results   ..."
     "footer   footer     footer    footer";
+}
+</style>
+
+
+
+
+---------
+
+
+
+  <template>
+  <div
+    v-show="bannerMessage"
+    v-bind:style="{ 'background-color': bannerBackgroundColor }"
+  >
+    <p>{{ bannerMessage }} --{{ bannerType }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    bannerMessage: String,
+    bannerType: String,
+  },
+  computed: {
+    bannerBackgroundColor() {
+      if (this.bannerType === "Error") {
+        return "red";
+      } else if (this.bannerType === "Success") {
+        return "green";
+      } else {
+        return "blue";
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+div {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+span p {
+  padding: 15px;
+  color: white;
+  width: auto;
 }
 </style>

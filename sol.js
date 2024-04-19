@@ -1,154 +1,55 @@
-<template>
-  <div id="app">
-    Welcome
-
-    <Header class="header" v-bind:title="title"></Header>
-    <Banner class="banner" v-bind:bannerMessage="messageToDisplay" v-bind:bannerType="messageType"></Banner>
-    <Search v-on:search-city="searchCity"></Search>
-    <Weather></Weather>
-    <Footer :fm="footerMessage"></Footer>
-
-    <hr>
-  </div>
-</template>
-
-<script>
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
-import Banner from "./components/Banner.vue";
-import Search from "./components/Search.vue";
-import Weather from "./components/Weather.vue";
-import axios from 'axios'
-
-export default {
-  components: {
-    Header,
-    Footer,
-    Banner,
-    Search,
-    Weather,
-  },
-  data() {
-    return {
-      title:'Vue Weather App',
-      footerMessage:'HCL Tech All rights Reserved @ 2024',
-      apiKey:'b3aaa0b3323c0baab93aff38f75b44cb',
-      messageType:'Info',
-      messageToDisplay:''
-    }
-  },
-  created() {
-    if(this.apiKey ===''){
-     this.messageType='Error',
-     this.messageToDisplay='API Key not found...!'
-    }
-  },
-  
-  methods: {
-    searchCity(city){
-      axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${this.apiKey}`)
-       .then((response)=> {
-        console.log(response.data);
-       })
-
-    }
-  },
-};
-</script>
-
-<style>
-* {
-  box-sizing:border-box;
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  background: #f1f3f5;
-  font-family: segoe ui,helvetica neue,sans-serif;
-  color: #345;
-  overflow-x: hidden;
-}
-
-/* CSS Grid Styling
-*******************/
-.header {
-  grid-area: header;
-}
-.banner {
-  grid-area: banner;
-}
-.weather-search {
-  grid-area: search;
-}
-.weather-results {
-  grid-area: results;
-}
-.footer {
-  grid-area: footer;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 10% 35% 35% 10%;
-  grid-auto-rows: minmax(20px, auto);
-  grid-gap: 10px;
-  max-width: 1080px;
+/* Weather Results Styling
+**************************/
+.weather-results-container {
   margin: auto;
-  grid-template-areas:
-    "header   header     header    header"
-    "banner   banner     banner    banner"
-    "...      search     search    ..."
-    "...      results    results   ..."
-    "footer   footer     footer    footer";
+  display: flex;
+  flex-direction: column;
 }
-</style>
 
-
-
-
----------
-
-
-
-  <template>
-  <div
-    v-show="bannerMessage"
-    v-bind:style="{ 'background-color': bannerBackgroundColor }"
-  >
-    <p>{{ bannerMessage }} --{{ bannerType }}</p>
-  </div>
-</template>
-
-<script>
-export default {
-  props: {
-    bannerMessage: String,
-    bannerType: String,
-  },
-  computed: {
-    bannerBackgroundColor() {
-      if (this.bannerType === "Error") {
-        return "red";
-      } else if (this.bannerType === "Success") {
-        return "green";
-      } else {
-        return "blue";
-      }
-    },
-  },
-};
-</script>
-
-<style scoped>
-div {
-  width: 100%;
-  display: inline-block;
-  margin-bottom: 15px;
+.weather-results-data {
+  display: flex;
+  flex-direction: row;
 }
-span p {
-  padding: 15px;
+
+.weather-results-summary, .weather-results-temperatures {
+  margin: 0 10px;
+  padding: 10px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 6px 8px rgba(102,119,136,.03), 0 1px 2px rgba(102,119,136,.3);
+}
+
+.weather-results-temperatures {
+  padding: 10px 40px;
+}
+
+.weather-title {
+  margin-bottom: 0.5em;
+}
+
+.weather-title h2 {
+  text-align: center;
+  color: #745fb5;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.weather-results-buttons {
+  margin: auto;
+}
+
+.weather-results-buttons button {
+  background-color: blue;
   color: white;
-  width: auto;
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 1em;
+  border-radius: 8px;
+  border: none;
+  margin: 6px;
 }
-</style>
+
+.weather-results-buttons button:hover {
+  color: black;
+  cursor: pointer;
+}

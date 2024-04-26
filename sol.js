@@ -1,29 +1,21 @@
 <template>
-   <form @submit.prevent="handleSubmit">
-<input  placeholder="Enter Task" v-model="newTask"/>
-<button>Add Task</button>
-   </form>
+    <div class="task">
+      <h3>{{ task.title }}</h3>
+      <div class="icons">
+        <i class="material-symbols-outlined" @click="taskStore.deleteTask(task.id)">delete</i>
+        <i class="material-symbols-outlined"  @click="taskStore.toogleFav(task.id)">favorite</i>
+      </div>
+    </div>
 </template>
 
 <script>
 import { useTaskStore } from '@/stores/TaskStore';
-import { ref } from 'vue';
 
     export default {
+        props:["task"],
         setup(){
-            const taskStore=useTaskStore()
-            const newTask= ref('')
-            const handleSubmit=()=>{
-                if(newTask.value.length >0){
-                    taskStore.addTask({
-                        title:newTask.value,
-                        isFav:false,
-                        id:Math.floor(Math.random()* 10000)
-                    })
-                    newTask.value=''
-                }
-            }
-            return {handleSubmit,newTask}
+          const taskStore=useTaskStore()
+          return {taskStore}
         }
     }
 </script>
@@ -31,3 +23,49 @@ import { ref } from 'vue';
 <style lang="scss" scoped>
 
 </style>
+
+
+
+
+
+
+
+import { defineStore } from "pinia";
+
+
+export const useTaskStore=defineStore('taskStore',{
+    state:() =>({
+        tasks:[],
+        name:'saurabh'
+    }),
+    getters:{
+        favs(){
+            return this.tasks.filter(t=>t.isFav)
+        },
+        favCount(){
+            return this.tasks.reduce((p,c)=>{
+                return c.isFav ? p+1 :p
+            },0)
+        },
+        totalCount:(state)=>{
+            return state.tasks.length
+        }
+    },
+    actions:{
+        addTask(task){
+           
+            this.tasks.push(task)
+        },
+        deleteTask(id){
+            this.tasks=this.tasks.filter(t=>{
+                return t.id !==id
+            })
+        
+        },
+      toogleFav(id){
+            const task= this.tasks.find(t =>t.id === id) 
+            task.isFav =!task.isFav
+            
+        }
+    }
+})

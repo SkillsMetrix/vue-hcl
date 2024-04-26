@@ -1,55 +1,32 @@
-/* Weather Results Styling
-**************************/
-.weather-results-container {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+body {
+  background: #f2f2f2;
+  color: #444;
+  margin: 0;
+}
+body * {
+  font-family: "Poppins";
 }
 
-.weather-results-data {
-  display: flex;
-  flex-direction: row;
-}
-
-.weather-results-summary, .weather-results-temperatures {
-  margin: 0 10px;
-  padding: 10px;
-  border-radius: 2px;
-  background: #fff;
-  box-shadow: 0 6px 8px rgba(102,119,136,.03), 0 1px 2px rgba(102,119,136,.3);
-}
-
-.weather-results-temperatures {
-  padding: 10px 40px;
-}
-
-.weather-title {
-  margin-bottom: 0.5em;
-}
-
-.weather-title h2 {
+/* header */
+header {
   text-align: center;
-  color: #745fb5;
-  white-space: nowrap;
-  overflow: hidden;
+  background: #e7e7e7;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.weather-results-buttons {
-  margin: auto;
+header img {
+  max-width: 60px;
+  transform: rotate(-10deg);
 }
-
-.weather-results-buttons button {
-  background-color: blue;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  font-size: 1em;
-  border-radius: 8px;
-  border: none;
-  margin: 6px;
-}
-
-.weather-results-buttons button:hover {
-  color: black;
-  cursor: pointer;
+header h1 {
+  margin: 0;
+  font-size: 2em;
+  padding-top: 25px;
+  margin-left: 15px;
+  color: #777;
+  transform: rotate(2deg);
 }

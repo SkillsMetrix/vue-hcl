@@ -1,71 +1,101 @@
-<template>
-    <div class="task">
-      <h3>{{ task.title }}</h3>
-      <div class="icons">
-        <i class="material-symbols-outlined" @click="taskStore.deleteTask(task.id)">delete</i>
-        <i class="material-symbols-outlined"  @click="taskStore.toogleFav(task.id)">favorite</i>
-      </div>
-    </div>
-</template>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
-<script>
-import { useTaskStore } from '@/stores/TaskStore';
+body {
+  background: #f2f2f2;
+  color: #444;
+  margin: 0;
+}
+body * {
+  font-family: "Poppins";
+}
 
-    export default {
-        props:["task"],
-        setup(){
-          const taskStore=useTaskStore()
-          return {taskStore}
-        }
-    }
-</script>
-
-<style lang="scss" scoped>
-
-</style>
-
-
-
-
-
-
-
-import { defineStore } from "pinia";
-
-
-export const useTaskStore=defineStore('taskStore',{
-    state:() =>({
-        tasks:[],
-        name:'saurabh'
-    }),
-    getters:{
-        favs(){
-            return this.tasks.filter(t=>t.isFav)
-        },
-        favCount(){
-            return this.tasks.reduce((p,c)=>{
-                return c.isFav ? p+1 :p
-            },0)
-        },
-        totalCount:(state)=>{
-            return state.tasks.length
-        }
-    },
-    actions:{
-        addTask(task){
-           
-            this.tasks.push(task)
-        },
-        deleteTask(id){
-            this.tasks=this.tasks.filter(t=>{
-                return t.id !==id
-            })
-        
-        },
-      toogleFav(id){
-            const task= this.tasks.find(t =>t.id === id) 
-            task.isFav =!task.isFav
-            
-        }
-    }
-})
+/* header */
+header {
+  text-align: center;
+  background: #e7e7e7;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header img {
+  max-width: 60px;
+  transform: rotate(-10deg);
+}
+header h1 {
+  margin: 0;
+  font-size: 2em;
+  padding-top: 25px;
+  margin-left: 15px;
+  color: #777;
+  transform: rotate(2deg);
+}
+.task-list{
+  max-width: 640px;
+  margin: 20px auto;
+}
+.task{
+  padding:6px 20px;
+  background: #fff;
+  margin-top: 20px;
+  border-radius: 4px;
+  box-shadow: 2 px 4px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.task h3,.task .icons{
+  display: inline-block;
+}
+.task .icons{
+  text-align: right;
+}
+.task i{
+  font-size: 1.4em;
+  margin-left: 6px;
+  cursor: pointer;
+  color: #bbb;
+}
+.filter{
+  width: 640px;
+  margin: 10px auto;
+  text-align: right;
+}
+.filter button{
+  display: inline-block;
+  margin-left: 10px;
+  background: pink;
+  border: 2px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 1em;
+}
+.new-task-form{
+  background: lightblue;
+  padding: 20px 0;
+}
+form{
+  max-width: 400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+}
+form button{
+  display: inline-block;
+ 
+  background: lightsalmon;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1em;
+}
+form input{
+  border: 0;
+  padding: 10px;
+  border-radius: 6px;
+  color: #555;
+  font-size: 1em;
+}
